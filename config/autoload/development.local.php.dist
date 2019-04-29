@@ -1,0 +1,52 @@
+<?php
+/**
+ * Local Configuration Override for DEVELOPMENT MODE.
+ *
+ * This configuration override file is for providing configuration to use while
+ * in development mode. Run:
+ *
+ * <code>
+ * $ composer development-enable
+ * </code>
+ *
+ * from the project root to copy this file to development.local.php and enable
+ * the settings it contains.
+ *
+ * You may also create files matching the glob pattern `{,*.}{global,local}-development.php`.
+ */
+
+use Zend\Log\Filter\Priority;
+use Zend\Log\Logger;
+use Zend\Log\Writer\Stream;
+
+return [
+    'log' => [
+        'Log\Error' => [
+            'writers' => [
+                [
+                    'name' => Stream::class,
+                    'priority' => 1,
+                    'options'  => [
+                        'stream' => 'log/php/error.log',
+                        'filters' => [
+                            [
+                                'name' => Priority::class,
+                                'options' => [
+                                    'priority' => Logger::DEBUG,
+                                    'operator' => '<='
+                                ],
+                            ],
+                        ],
+                        'formatter' => [
+                            'name' => 'simple',
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ],
+    'view_manager' => [
+        'display_not_found_reason' => true,
+        'display_exceptions' => true,
+    ],
+];

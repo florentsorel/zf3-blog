@@ -1,0 +1,39 @@
+<?php
+/**
+ * @var \Zend\Paginator\Paginator $paginator
+ * @var \Application\Model\Infrastructure\PostView $post
+ */
+?>
+
+<div class="main">
+    <?php if (count($paginator)): ?>
+        <?php foreach ($paginator as $post): ?>
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h2 class="h5 card-title"><?= $post->getName(); ?></h2>
+                    <?php if ($post->hasContent()): ?>
+                        <?= $post->getContent(); ?>
+                    <?php endif; ?>
+                </div>
+            </div>
+        <?php endforeach; ?>
+
+        <?=
+        $this->paginationControl(
+            $this->paginator,
+            'sliding',
+            'pagination',
+            ['route' => 'application']
+        );
+        ?>
+
+    <?php else: ?>
+        <p>Aucun articles</p>
+    <?php endif; ?>
+</div>
+
+<?php $this->inlineScript()->captureStart(); ?>
+$(document).ready(function () {
+    application.index.index.init();
+});
+<?php $this->inlineScript()->captureEnd(); ?>

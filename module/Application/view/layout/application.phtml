@@ -1,0 +1,54 @@
+<?= $this->doctype() ?>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <?php
+        if (! empty($this->metaTitle)) {
+            $this->plugin('headTitle')->prepend($this->metaTitle);
+        }
+        ?>
+
+        <?= $this->headTitle(), $this->headMeta(), $this->headLink(); ?>
+
+        <?php if (! empty($this->metaDescription)) : ?>
+            <meta name="description" content="<?= $this->escapeHtml($this->metaDescription); ?>"/>
+        <?php endif; ?>
+    </head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="<?= $this->url('application') ?>">Blog</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="<?= $this->url('application') ?>">Home</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <?= $this->content ?>
+</div>
+
+<?= $this->headScript(); ?>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        application.init();
+    });
+</script>
+
+
+<?= $this->inlineScript() ?>
+
+</body>
+</html>

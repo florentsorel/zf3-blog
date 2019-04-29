@@ -1,0 +1,15 @@
+/vendor/
+config/development.config.php
+config/autoload/local.php
+config/.env
+/data/*
+!data/.gitkeep
+/log/**/*.log
+!data/log/apache/.gitkeep
+!data/log/php/.gitkeep
+/node_modules/
+yarn-error.log
+/public/[0-9]*.[0-9]*.[0-9]*/
+/.idea/
+.php_cs.cache
+.DS_Store
