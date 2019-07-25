@@ -4,13 +4,13 @@
  * @author Rtransat
  */
 
-namespace Application;
+namespace Admin;
 
 use Shared\Controller\ServiceManagerAwareControllerFactory;
 
 return [
     'factories' => [
         Controller\IndexController::class => ServiceManagerAwareControllerFactory::class,
-        Controller\UserController::class => ServiceManagerAwareControllerFactory::class,
+        Controller\AuthController::class => ServiceManagerAwareControllerFactory::class
     ],
 ];

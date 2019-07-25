@@ -5,12 +5,9 @@
  */
 
 
-namespace Shared;
+namespace Admin;
 
-use Shared\Listener\CheckAuthorizationListener;
-use Shared\Listener\ConfigureLayoutListener;
 use Zend\EventManager\EventInterface;
-use Zend\I18n\View\Helper\Plural;
 use Zend\ModuleManager\Feature\BootstrapListenerInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\ControllerProviderInterface;
@@ -24,6 +21,7 @@ class Module implements
     ControllerProviderInterface,
     ViewHelperProviderInterface
 {
+
     public function getConfig()
     {
         return require __DIR__ . '/../config/module.config.php';
@@ -46,23 +44,8 @@ class Module implements
 
     public function onBootstrap(EventInterface $event)
     {
-        $eventManager = $event->getApplication()->getEventManager();
-        $serviceManager = $event->getApplication()->getServiceManager();
-
-        // Enregistre le listener qui gère les autorisations d'accès
-        $checkAuthorizationListener = new CheckAuthorizationListener(
-            $serviceManager
-        );
-        $checkAuthorizationListener->attach($eventManager, -2);
-
-        // Enregistre le listener qui gère la configuration du layout
-        $configureLayoutListener = new ConfigureLayoutListener($serviceManager);
-        $configureLayoutListener->attach($eventManager, 2);
-
-        /* @var $pluralViewHelper \Zend\I18n\View\Helper\Plural */
-        $pluralViewHelper = $serviceManager
-            ->get('ViewHelperManager')
-            ->get(Plural::class);
-        $pluralViewHelper->setPluralRule('nplurals=2; plural=(n==0 || n==1 ? 0 : 1)');
+        //
     }
+
+
 }
