@@ -1,0 +1,67 @@
+<div class="main">
+    <div class="jumbotron">
+        <div class="container">
+            <h1 class="h1">Connexion</h1>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div class="admin-login">
+
+            <?= $this->form()->openTag($this->form) ?>
+
+            <?php if (isset($this->errorMessage)) : ?>
+                <div class="alert alert-danger"><?= $this->errorMessage; ?></div>
+            <?php endif; ?>
+            <?php if (isset($this->authenticationFailed)) : ?>
+                <div class="alert alert-danger">La connexion a échoué. Veuillez réessayer.</div>
+            <?php endif; ?>
+
+            <fieldset>
+                <legend class="h2 mod-primary">Identifiants</legend>
+
+                <?php
+                $emailElement = $this->form->get('email');
+                $emailElement->setAttribute('id', 'user-email')
+                    ->setAttribute('class', 'form-control');
+                ?>
+                <div class="form-group<?= ($emailElement->getMessages()) ? ' has-error' : '' ?>">
+                    <label for="<?= $emailElement->getAttribute('id') ?>" class="control-label u-bold">Adresse email&nbsp;*</label>
+                    <?= $this->formEmail($emailElement) ?>
+                    <?= $this->formElementError($emailElement, ['class' => 'help-block']) ?>
+                </div>
+
+                <?php
+                $passwordElement = $this->form->get('password');
+                $passwordElement->setAttribute('id', 'user-password')
+                    ->setAttribute('class', 'form-control');
+                ?>
+                <div class="<?= ($passwordElement->getMessages()) ? ' has-error' : '' ?>">
+                    <label for="<?= $passwordElement->getAttribute('id') ?>" class="control-label u-bold">Mot de passe&nbsp;*</label>
+                    <?= $this->formPassword($passwordElement) ?>
+                    <?= $this->formElementError($passwordElement, ['class' => 'help-block']) ?>
+                </div>
+
+                <?php
+                $rememberMeElement = $this->form->get('remember_me');
+                $rememberMeElement->setAttribute('id', 'user-remember-me')
+                    ->setAttribute('class', '');
+                ?>
+                <div class="checkbox">
+                    <div class="<?= ($rememberMeElement->getMessages()) ? ' has-error' : '' ?>">
+                        <label for="<?= $rememberMeElement->getAttribute('id') ?>">
+                            <?= $this->formCheckbox($rememberMeElement) ?> Se souvenir de moi
+                        </label>
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="text-right">
+                <button type="submit" class="btn btn-primary">Se connecter</button>
+            </div>
+
+            <?= $this->form()->closeTag($this->form) ?>
+        </div>
+    </div>
+</div>

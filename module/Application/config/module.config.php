@@ -6,6 +6,7 @@
 
 namespace Application;
 
+use Zend\Router\Http\Literal;
 use Zend\Router\Http\Segment;
 
 return [
@@ -19,6 +20,16 @@ return [
                         'page' => 1,
                         'controller' => Controller\IndexController::class,
                         'action'     => 'index',
+                    ],
+                ],
+            ],
+            'logout' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route' => '/deconnexion',
+                    'defaults' => [
+                        'controller' => Controller\UserController::class,
+                        'action' => 'logout',
                     ],
                 ],
             ],

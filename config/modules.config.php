@@ -23,4 +23,5 @@ return [
     'Zend\Validator',
     'Shared',
     'Application',
+    'Admin',
 ];
