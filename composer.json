@@ -29,13 +29,15 @@
         "zendframework/zend-hydrator": "^3.0",
         "tightenco/collect": "^5.8",
         "zendframework/zend-paginator": "^2.8",
-        "zendframework/zend-authentication": "^2.6"
+        "zendframework/zend-authentication": "^2.6",
+        "zendframework/zend-mvc-i18n": "^1.1"
     },
     "autoload": {
         "psr-4": {
             "Shared\\": "module/Shared/src/",
             "Application\\": "module/Application/src/",
-            "Admin\\": "module/Admin/src/"
+            "Admin\\": "module/Admin/src/",
+            "Language\\": "module/Language/src/"
         }
     },
     "extra": [],
