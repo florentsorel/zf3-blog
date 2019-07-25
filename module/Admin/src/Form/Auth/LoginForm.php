@@ -31,12 +31,15 @@ class LoginForm extends Form
 
         $inputFilter = $this->getInputFilter();
 
+        $emailValidator = new EmailAddress();
+        $emailValidator->setMessage("L'adresse email est invalide");
+
         $emailInput = $inputFilter->get('email');
         $emailInput->setRequired(true);
         $emailInput->getFilterChain()
             ->attach(new StringTrim());
         $emailInput->getValidatorChain()
-            ->attach(new EmailAddress());
+            ->attach($emailValidator);
 
         $passwordInput = $inputFilter->get('password');
         $passwordInput->setRequired(true);
