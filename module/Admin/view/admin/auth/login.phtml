@@ -18,39 +18,37 @@
                 <div class="alert alert-danger">La connexion a échoué. Veuillez réessayer.</div>
             <?php endif; ?>
 
-            <fieldset>
-                <?php
-                $emailElement = $this->form->get('email');
-                $emailElement->setAttribute('id', 'user-email')
-                    ->setAttribute('class', 'form-control');
-                ?>
-                <div class="form-group<?= ($emailElement->getMessages()) ? ' has-error' : '' ?>">
-                    <label for="<?= $emailElement->getAttribute('id') ?>" class="control-label u-bold">Adresse email&nbsp;*</label>
-                    <?= $this->formEmail($emailElement) ?>
-                    <?= $this->formElementError($emailElement, ['class' => 'help-block']) ?>
-                </div>
+            <?php
+            $emailElement = $this->form->get('email');
+            $emailElement->setAttribute('id', 'user-email')
+                ->setAttribute('class', 'form-control');
+            ?>
+            <div class="form-group<?= ($emailElement->getMessages()) ? ' has-error' : '' ?>">
+                <label for="<?= $emailElement->getAttribute('id') ?>" class="control-label u-bold">Adresse email&nbsp;*</label>
+                <?= $this->formEmail($emailElement) ?>
+                <?= $this->formElementError($emailElement, ['class' => 'help-block']) ?>
+            </div>
 
-                <?php
-                $passwordElement = $this->form->get('password');
-                $passwordElement->setAttribute('id', 'user-password')
-                    ->setAttribute('class', 'form-control');
-                ?>
-                <div class="form-group<?= ($passwordElement->getMessages()) ? ' has-error' : '' ?>">
-                    <label for="<?= $passwordElement->getAttribute('id') ?>" class="control-label u-bold">Mot de passe&nbsp;*</label>
-                    <?= $this->formPassword($passwordElement) ?>
-                    <?= $this->formElementError($passwordElement, ['class' => 'help-block']) ?>
-                </div>
+            <?php
+            $passwordElement = $this->form->get('password');
+            $passwordElement->setAttribute('id', 'user-password')
+                ->setAttribute('class', 'form-control');
+            ?>
+            <div class="form-group<?= ($passwordElement->getMessages()) ? ' has-error' : '' ?>">
+                <label for="<?= $passwordElement->getAttribute('id') ?>" class="control-label u-bold">Mot de passe&nbsp;*</label>
+                <?= $this->formPassword($passwordElement) ?>
+                <?= $this->formElementError($passwordElement, ['class' => 'help-block']) ?>
+            </div>
 
-                <?php
-                $rememberMeElement = $this->form->get('remember_me');
-                $rememberMeElement->setAttribute('id', 'user-remember-me')
-                    ->setAttribute('class', 'form-check-input');
-                ?>
-                <div class="form-check">
-                    <?= $this->formCheckbox($rememberMeElement) ?>
-                    <label class="form-check-label" for="<?= $rememberMeElement->getAttribute('id') ?>">Se souvenir de moi</label>
-                </div>
-            </fieldset>
+            <?php
+            $rememberMeElement = $this->form->get('remember_me');
+            $rememberMeElement->setAttribute('id', 'user-remember-me')
+                ->setAttribute('class', 'form-check-input');
+            ?>
+            <div class="form-check">
+                <?= $this->formCheckbox($rememberMeElement) ?>
+                <label class="form-check-label" for="<?= $rememberMeElement->getAttribute('id') ?>">Se souvenir de moi</label>
+            </div>
 
             <div class="text-right">
                 <button type="submit" class="btn btn-primary">Se connecter</button>
