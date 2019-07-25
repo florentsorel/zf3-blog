@@ -6,11 +6,13 @@
 
 namespace Admin\Form\Auth;
 
+use Zend\Filter\StringTrim;
 use Zend\Form\Element\Checkbox;
-use Zend\Form\Element\Email;
 use Zend\Form\Element\Password;
+use Zend\Form\Element\Text;
 use Zend\Form\Form;
-use Zend\InputFilter\Input;
+use Zend\Validator\EmailAddress;
+use Zend\Validator\StringLength;
 
 class LoginForm extends Form
 {
@@ -21,18 +23,26 @@ class LoginForm extends Form
     {
         parent::__construct();
 
-        $this->add(new Email('email'));
+        $this->setAttribute('novalidate', 'novalidate');
+
+        $this->add(new Text('email'));
         $this->add(new Password('password'));
         $this->add(new Checkbox('remember_me'));
 
         $inputFilter = $this->getInputFilter();
 
-        $emailInput = new Input('email');
+        $emailInput = $inputFilter->get('email');
         $emailInput->setRequired(true);
-        $inputFilter->add($emailInput);
+        $emailInput->getFilterChain()
+            ->attach(new StringTrim());
+        $emailInput->getValidatorChain()
+            ->attach(new EmailAddress());
 
-        $passwordInput = new Input('password');
+        $passwordInput = $inputFilter->get('password');
         $passwordInput->setRequired(true);
-        $inputFilter->add($passwordInput);
+        $passwordInput->getValidatorChain()
+            ->attach(new StringLength([
+                'min' => 8
+            ]));
     }
 }
