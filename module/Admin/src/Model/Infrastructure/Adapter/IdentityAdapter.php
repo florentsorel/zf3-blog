@@ -4,10 +4,12 @@
  * @author Rtransat
  */
 
-namespace Shared\Model\Infrastructure\Adapter;
+namespace Admin\Model\Infrastructure\Adapter;
 
+use Admin\Model\Infrastructure\Authentication\Identity;
+use Shared\Model\Domain\User\Email;
+use Shared\Model\Domain\User\Role;
 use Shared\Model\Domain\User\UserRepository;
-use Shared\Model\Infrastructure\Authentication\Identity;
 use Zend\Authentication\Adapter\AdapterInterface;
 use Zend\Authentication\Result;
 
@@ -17,25 +19,31 @@ class IdentityAdapter implements AdapterInterface
     /** @var \Shared\Model\Domain\User\UserRepository */
     private $userRepository;
 
-    /** @var string */
+    /** @var \Shared\Model\Domain\User\Email */
     private $email;
 
     /** @var string */
     private $password;
 
+    /** @var \Shared\Model\Domain\User\Role */
+    private $role;
+
     /**
      * @param \Shared\Model\Domain\User\UserRepository $userRepository
      * @param \Shared\Model\Domain\User\Email $email
-     * @param null|string $password
+     * @param string $password
+     * @param \Shared\Model\Domain\User\Role $role
      */
     public function __construct(
         UserRepository $userRepository,
-        $email,
-        $password
+        Email $email,
+        string $password,
+        Role $role
     ) {
         $this->userRepository = $userRepository;
         $this->email = $email;
         $this->password = $password;
+        $this->role = $role;
     }
 
     /**
@@ -48,7 +56,10 @@ class IdentityAdapter implements AdapterInterface
     {
         // Recherche le compte utilisateur à partir de l'adresse email
         /** @var \Shared\Model\Domain\User\User $user */
-        $user = $this->userRepository->findByEmail($this->email);
+        $user = $this->userRepository->findByEmailAndRole(
+            $this->email,
+            $this->role
+        );
 
         // Si aucun compte ne correspond, retourne un code echec
         if ($user === null) {

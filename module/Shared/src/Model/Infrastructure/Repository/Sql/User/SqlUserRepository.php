@@ -8,6 +8,7 @@ namespace Shared\Model\Infrastructure\Repository\Sql\User;
 
 use ReflectionClass;
 use Shared\Model\Domain\User\Email;
+use Shared\Model\Domain\User\Role;
 use Shared\Model\Domain\User\User;
 use Shared\Model\Domain\User\UserRepository;
 use Zend\Db\Adapter\Adapter;
@@ -82,6 +83,38 @@ SQL;
         $statement = $this->db->createStatement($select);
         $queryResult = $statement->execute([
             ':email' => $email->toString()
+        ]);
+
+        if (! $queryResult->isQueryResult() || $queryResult->count() < 1) {
+            return null;
+        }
+
+        $instanciateUser = $this->instanciateUser();
+        $this->userHydrator->hydrate($queryResult->current(), $instanciateUser);
+
+        return $instanciateUser;
+    }
+
+    /**
+     * @param \Shared\Model\Domain\User\Email $email
+     * @param \Shared\Model\Domain\User\Role $role
+     * @return \Shared\Model\Domain\User\User|null
+     * @throws \ReflectionException
+     */
+    public function findByEmailAndRole(Email $email, Role $role): ?User
+    {
+        $select = <<<SQL
+            SELECT 
+                User.*
+            FROM User
+            WHERE User.`email` = :email AND User.`role` = :role
+            LIMIT 1
+SQL;
+
+        $statement = $this->db->createStatement($select);
+        $queryResult = $statement->execute([
+            ':email' => $email->toString(),
+            ':role' => $role->toInt()
         ]);
 
         if (! $queryResult->isQueryResult() || $queryResult->count() < 1) {

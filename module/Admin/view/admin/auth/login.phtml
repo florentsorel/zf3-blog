@@ -19,8 +19,6 @@
             <?php endif; ?>
 
             <fieldset>
-                <legend class="h2 mod-primary">Identifiants</legend>
-
                 <?php
                 $emailElement = $this->form->get('email');
                 $emailElement->setAttribute('id', 'user-email')
@@ -37,7 +35,7 @@
                 $passwordElement->setAttribute('id', 'user-password')
                     ->setAttribute('class', 'form-control');
                 ?>
-                <div class="<?= ($passwordElement->getMessages()) ? ' has-error' : '' ?>">
+                <div class="form-group<?= ($passwordElement->getMessages()) ? ' has-error' : '' ?>">
                     <label for="<?= $passwordElement->getAttribute('id') ?>" class="control-label u-bold">Mot de passe&nbsp;*</label>
                     <?= $this->formPassword($passwordElement) ?>
                     <?= $this->formElementError($passwordElement, ['class' => 'help-block']) ?>
@@ -46,14 +44,11 @@
                 <?php
                 $rememberMeElement = $this->form->get('remember_me');
                 $rememberMeElement->setAttribute('id', 'user-remember-me')
-                    ->setAttribute('class', '');
+                    ->setAttribute('class', 'form-check-input');
                 ?>
-                <div class="checkbox">
-                    <div class="<?= ($rememberMeElement->getMessages()) ? ' has-error' : '' ?>">
-                        <label for="<?= $rememberMeElement->getAttribute('id') ?>">
-                            <?= $this->formCheckbox($rememberMeElement) ?> Se souvenir de moi
-                        </label>
-                    </div>
+                <div class="form-check">
+                    <?= $this->formCheckbox($rememberMeElement) ?>
+                    <label class="form-check-label" for="<?= $rememberMeElement->getAttribute('id') ?>">Se souvenir de moi</label>
                 </div>
             </fieldset>
 

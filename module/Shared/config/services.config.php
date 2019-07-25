@@ -14,7 +14,6 @@ return [
     ],
     'invokables' => [
         \Zend\Authentication\AuthenticationService::class,
-        Model\Infrastructure\Authentication\Storage::class,
     ],
     'factories' => [
         // Repository

@@ -10,7 +10,7 @@ namespace Admin\Controller;
 use Admin\Model\Application\Query\Auth\AuthenticateAdmin;
 use Admin\Model\Application\Query\Auth\AuthenticateAdminRequest;
 use Admin\Model\Application\Query\Auth\BuildLoginForm;
-use Shared\Model\Infrastructure\Authentication\Storage;
+use Admin\Model\Infrastructure\Authentication\Storage;
 use Zend\Authentication\Result;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\ServiceManager\ServiceManager;
@@ -66,7 +66,7 @@ class AuthController extends AbstractActionController
         $result = $authenticateUserResponse->getAuthenticationResult();
         if ($result->getCode() === Result::SUCCESS) {
             if ($authenticateUserResponse->hasRememberMe() === true) {
-                /** @var \Shared\Model\Infrastructure\Authentication\Storage $sessionStorage */
+                /** @var \Admin\Model\Infrastructure\Authentication\Storage $sessionStorage */
                 $sessionStorage = $this->serviceManager->get(Storage::class);
                 $sessionStorage->setRememberMe();
             }

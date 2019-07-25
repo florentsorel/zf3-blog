@@ -4,7 +4,7 @@
  * @author Rtransat
  */
 
-namespace Shared\Model\Infrastructure\Authentication;
+namespace Admin\Model\Infrastructure\Authentication;
 
 use Zend\Authentication\Storage\Session;
 
