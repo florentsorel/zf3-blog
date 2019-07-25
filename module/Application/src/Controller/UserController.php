@@ -30,10 +30,16 @@ class UserController extends AbstractActionController
      */
     public function logoutAction(): Response
     {
-        // Configuration du layout
-        $this->layout()->setVariable('metaTitle', "Déconnexion");
+        /** @var \Zend\Authentication\AuthenticationService $authentication */
+        $authentication = $this->serviceManager->get(
+            AuthenticationService::class
+        );
 
-        /** @var \Shared\Model\Infrastructure\Authentication\Storage $storage */
+        if ($authentication->hasIdentity() === false) {
+            return $this->redirect()->toRoute('application');
+        }
+
+        /** @var \Admin\Model\Infrastructure\Authentication\Storage $storage */
         $sessionStorage = $this->serviceManager->get(Storage::class);
         $sessionStorage->forgetMe();
 
