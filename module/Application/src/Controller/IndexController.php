@@ -33,7 +33,7 @@ class IndexController extends AbstractActionController
     {
         $this->layout()->setVariable('metaTitle', 'Liste des articles');
 
-        if ((empty($this->params()->fromQuery('page')) === false)
+        if (empty($this->params()->fromQuery('page')) === false
             && is_numeric($this->params()->fromQuery('page')) === false
         ) {
             $this->redirect()->toRoute('application')->setStatusCode(301);
