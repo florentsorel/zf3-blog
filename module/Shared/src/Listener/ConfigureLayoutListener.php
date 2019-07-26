@@ -87,7 +87,15 @@ class ConfigureLayoutListener extends AbstractListenerAggregate
             return;
         }
 
-        $this->configureApplicationLayout($event);
+        // Sinon configure la layout en fonction de la route
+        $routeParts = explode('/', $event->getRouteMatch()->getMatchedRouteName());
+        if ($routeParts[0] === 'admin' && isset($routeParts[1]) && $routeParts[1] === 'login') {
+            $this->configureApplicationLayout($event);
+        } elseif ($routeParts[0] === 'admin') {
+            $this->configureAdminLayout($event);
+        } else {
+            $this->configureApplicationLayout($event);
+        }
     }
 
     /**
@@ -117,6 +125,32 @@ class ConfigureLayoutListener extends AbstractListenerAggregate
         $viewHelperManager->get('headTitle')
             ->setSeparator(' - ')
             ->append('Blog')
+            ->setAutoEscape(false);
+    }
+
+    /**
+     * @param \Zend\Mvc\MvcEvent $event
+     */
+    private function configureAdminLayout(MvcEvent $event)
+    {
+        $layoutViewModel = $event->getViewModel();
+        $layoutViewModel->setTemplate('layout/admin');
+        $layoutViewModel->setVariable('appVersion', $this->appVersion);
+
+        $viewHelperManager = $this->serviceManager->get('ViewHelperManager');
+
+        $viewHelperManager->get('headLink')
+            ->headLink([
+                'rel' => 'icon',
+                'type' => 'image/png',
+                'href' => "/{$this->appVersion}/favicon.png",
+            ])
+            ->appendStylesheet("/{$this->appVersion}/css/application.css")
+            ->setAutoEscape(false);
+
+        $viewHelperManager->get('headTitle')
+            ->setSeparator(' - ')
+            ->append('Admin Blog')
             ->setAutoEscape(false);
     }
 }
