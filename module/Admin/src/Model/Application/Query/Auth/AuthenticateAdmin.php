@@ -6,11 +6,11 @@
 
 namespace Admin\Model\Application\Query\Auth;
 
-use Admin\Model\Infrastructure\Adapter\IdentityAdapter;
-use Admin\Model\Infrastructure\Authentication\Storage;
 use Shared\Model\Domain\User\Email;
 use Shared\Model\Domain\User\Role;
 use Shared\Model\Domain\User\UserRepository;
+use Shared\Model\Infrastructure\Adapter\IdentityAdapter;
+use Shared\Model\Infrastructure\Authentication\Storage;
 use Zend\Authentication\AuthenticationService;
 
 class AuthenticateAdmin

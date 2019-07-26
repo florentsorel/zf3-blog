@@ -4,7 +4,7 @@
  * @author Rtransat
  */
 
-namespace Admin\Model\Infrastructure\Authentication;
+namespace Shared\Model\Infrastructure\Authentication;
 
 use Shared\Model\Domain\User\Email;
 

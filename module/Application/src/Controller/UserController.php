@@ -6,7 +6,7 @@
 
 namespace Application\Controller;
 
-use Admin\Model\Infrastructure\Authentication\Storage;
+use Shared\Model\Infrastructure\Authentication\Storage;
 use Zend\Authentication\AuthenticationService;
 use Zend\Http\Response;
 use Zend\Mvc\Controller\AbstractActionController;
@@ -39,7 +39,7 @@ class UserController extends AbstractActionController
             return $this->redirect()->toRoute('application');
         }
 
-        /** @var \Admin\Model\Infrastructure\Authentication\Storage $storage */
+        /** @var \Shared\Model\Infrastructure\Authentication\Storage $storage */
         $sessionStorage = $this->serviceManager->get(Storage::class);
         $sessionStorage->forgetMe();
 

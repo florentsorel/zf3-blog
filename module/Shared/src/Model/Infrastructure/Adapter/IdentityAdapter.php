@@ -4,12 +4,12 @@
  * @author Rtransat
  */
 
-namespace Admin\Model\Infrastructure\Adapter;
+namespace Shared\Model\Infrastructure\Adapter;
 
-use Admin\Model\Infrastructure\Authentication\Identity;
 use Shared\Model\Domain\User\Email;
 use Shared\Model\Domain\User\Role;
 use Shared\Model\Domain\User\UserRepository;
+use Shared\Model\Infrastructure\Authentication\Identity;
 use Zend\Authentication\Adapter\AdapterInterface;
 use Zend\Authentication\Result;
 
