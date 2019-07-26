@@ -1,3 +1,9 @@
+<?php
+
+use Shared\Model\Domain\User\Role;
+use Shared\Model\Infrastructure\Authentication\Identity;
+
+?>
 <?= $this->doctype() ?>
 <html lang="fr">
     <head>
@@ -30,6 +36,22 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="<?= $this->url('application') ?>">Home</a>
                 </li>
+            </ul>
+            <ul class="navbar-nav">
+                <?php if ($this->layout()->identity instanceof Identity): ?>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Menu
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <?php if ($this->layout()->identity->getRoleId() === Role::ADMINISTRATOR): ?>
+                                <a class="dropdown-item" href="<?= $this->url('admin'); ?>">Administration</a>
+                            <?php endif; ?>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="<?= $this->url('logout'); ?>">Déconnexion</a>
+                        </div>
+                    </li>
+                <?php endif; ?>
             </ul>
         </div>
     </div>

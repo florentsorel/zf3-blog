@@ -6,6 +6,7 @@
 
 namespace Shared\Listener;
 
+use Zend\Authentication\AuthenticationService;
 use Zend\Console\Request as ConsoleRequest;
 use Zend\Console\RouteMatcher\RouteMatcherInterface as ConsoleRouteMatch;
 use Zend\EventManager\AbstractListenerAggregate;
@@ -29,6 +30,9 @@ class ConfigureLayoutListener extends AbstractListenerAggregate
 
     /** @var bool */
     private $isLayoutConfigured;
+
+    /** @var \Shared\Model\Infrastructure\Authentication\Identity */
+    private $identity;
 
     /**
      * @param \Zend\ServiceManager\ServiceManager $serviceManager
@@ -81,6 +85,12 @@ class ConfigureLayoutListener extends AbstractListenerAggregate
             return;
         }
 
+        // Récupère l'utilisateur connecté
+        /* @var $identity \Shared\Model\Infrastructure\Authentication\Identity */
+        $this->identity = $this->serviceManager
+            ->get(AuthenticationService::class)
+            ->getIdentity();
+
         // Si la route demandée n'existe pas, configure le layout Application
         if (! $event->getRouteMatch() instanceof RouteMatch) {
             $this->configureApplicationLayout($event);
@@ -105,6 +115,7 @@ class ConfigureLayoutListener extends AbstractListenerAggregate
     {
         $layoutViewModel = $event->getViewModel();
         $layoutViewModel->setTemplate('layout/application');
+        $layoutViewModel->setVariable('identity', $this->identity);
         $layoutViewModel->setVariable('appVersion', $this->appVersion);
 
         $viewHelperManager = $this->serviceManager->get('ViewHelperManager');
@@ -135,6 +146,7 @@ class ConfigureLayoutListener extends AbstractListenerAggregate
     {
         $layoutViewModel = $event->getViewModel();
         $layoutViewModel->setTemplate('layout/admin');
+        $layoutViewModel->setVariable('identity', $this->identity);
         $layoutViewModel->setVariable('appVersion', $this->appVersion);
 
         $viewHelperManager = $this->serviceManager->get('ViewHelperManager');
@@ -146,6 +158,10 @@ class ConfigureLayoutListener extends AbstractListenerAggregate
                 'href' => "/{$this->appVersion}/favicon.png",
             ])
             ->appendStylesheet("/{$this->appVersion}/css/application.css")
+            ->setAutoEscape(false);
+
+        $viewHelperManager->get('headScript')
+            ->appendFile("/{$this->appVersion}/js/application.js")
             ->setAutoEscape(false);
 
         $viewHelperManager->get('headTitle')
